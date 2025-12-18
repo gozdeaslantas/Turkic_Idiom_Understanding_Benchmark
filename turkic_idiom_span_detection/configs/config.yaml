@@ -1,0 +1,57 @@
+seed: 42
+max_length: 256
+num_proc: 4
+
+data:
+  csv_path: "data/raw/multi_turkic_idioms.csv"
+  output_labeled_csv: "data/processed/ner_labeled_multi_turkic.csv"
+  hf_dataset_repo: "XXX/turkic_idiom_span_dataset"
+  push_dataset: false
+  dataset_private: true
+
+runs:
+  base_out: "runs"
+  results_out: "runs/results"
+  figures_out: "figures"
+
+models:
+  # tag -> hf model id
+  xlmr: "xlm-roberta-base"
+  mbert: "bert-base-multilingual-cased"
+  berturk: "dbmdz/bert-base-turkish-cased"
+  electra_tr: "dbmdz/electra-base-turkish-cased-discriminator"
+  distilbert: "dbmdz/distilbert-base-turkish-cased"
+  convbert: "dbmdz/convbert-base-turkish-mc4-cased"
+  e5large: "ytu-ce-cosmos/turkish-e5-large"
+
+train_tr:
+  epochs: 5
+  batch_size: 8
+  lr: 5e-5
+  weight_decay: 0.01
+  save_total_limit: 2
+  logging_steps: 50
+  eval_strategy: "epoch"
+  save_strategy: "epoch"
+  metric_for_best_model: "f1"
+
+zero_shot:
+  langs: ["AZ", "TK", "GA", "UZ"]
+
+few_shot:
+  langs: ["AZ", "TK", "GA", "UZ"]
+  shots: [10, 30, 50, null]   # null = full
+  epochs: 5
+
+hf:
+  do_login: false
+  do_push_models: true
+  private: true
+  org_or_user: ""
+  repo_prefix: "idiom-span"   
+  versioning:
+    enabled: true
+    scheme: "date"           
+    semver: "v1.0.0"
+    extra: "span-v2"
+  commit_message: "Add checkpoints + tokenizer for Turkic idiom span detection"
