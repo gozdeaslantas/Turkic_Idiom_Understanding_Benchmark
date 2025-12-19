@@ -8,7 +8,6 @@ We release:
 - Dataset split files
 - Exact configuration and hyperparameter settings
 
-To preserve double-blind integrity, **model checkpoints and full
-datasets are referenced but not mirrored in this repository**.
+To preserve double-blind integrity, **model checkpoints are referenced but not mirrored in this repository**.
 All resources are hosted on HuggingFace and will be made public
 immediately after acceptance.
